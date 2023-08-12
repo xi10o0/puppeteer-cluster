@@ -130,7 +130,7 @@ export default class Worker<JobData, ReturnData> implements WorkerOptions {
 
     public async close(): Promise<void> {
         try {
-            await this.browser.close();
+           await this.browser.close();
         } catch (err: any) {
             debug(`Unable to close worker browser. Error message: ${err.message}`);
         }

@@ -6,7 +6,7 @@ import Worker, { WorkResult } from './Worker';
 
 import * as builtInConcurrency from './concurrency/builtInConcurrency';
 
-import type { Page, PuppeteerNodeLaunchOptions } from 'puppeteer';
+import type { Page, ConnectOptions, Browser } from 'puppeteer';
 import Queue from './Queue';
 import SystemMonitor from './SystemMonitor';
 import { EventEmitter } from 'events';
@@ -19,8 +19,8 @@ interface ClusterOptions {
     concurrency: number | ConcurrencyImplementationClassType;
     maxConcurrency: number;
     workerCreationDelay: number;
-    puppeteerOptions: PuppeteerNodeLaunchOptions;
-    perBrowserOptions: PuppeteerNodeLaunchOptions[] | undefined;
+    puppeteerOptions: ConnectOptions & {CreateInstanceFunc?:(browser: Browser) => Promise<Page>};
+    perBrowserOptions: ConnectOptions[] | undefined;
     monitor: boolean;
     timeout: number;
     retryLimit: number;
@@ -41,6 +41,7 @@ const DEFAULT_OPTIONS: ClusterOptions = {
     maxConcurrency: 1,
     workerCreationDelay: 0,
     puppeteerOptions: {
+        CreateInstanceFunc: undefined
         // headless: false, // just for testing...
     },
     perBrowserOptions: undefined,
@@ -76,7 +77,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
     static CONCURRENCY_BROWSER = 3; // no cookie sharing and individual processes (uses contexts)
 
     private options: ClusterOptions;
-    private perBrowserOptions: PuppeteerNodeLaunchOptions[] | null = null;
+    private perBrowserOptions: ConnectOptions[] | null = null;
     private workers: Worker<JobData, ReturnData>[] = [];
     private workersAvail: Worker<JobData, ReturnData>[] = [];
     private workersBusy: Worker<JobData, ReturnData>[] = [];
@@ -163,7 +164,7 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
         }
 
         try {
-            await this.browser.init();
+            await this.browser?.init();
         } catch (err: any) {
             throw new Error(`Unable to launch browser, error message: ${err.message}`);
         }
