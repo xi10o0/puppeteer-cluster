@@ -17,7 +17,7 @@ export default abstract class SingleBrowserImplementation extends ConcurrencyImp
     private openInstances: number = 0;
     private waitingForRepairResolvers: (() => void)[] = [];
 
-    public constructor(options: puppeteer.ConnectOptions & {CreateInstanceFunc?:(bw: puppeteer.Browser) => Promise<puppeteer.Page>}, puppeteer: any) {
+    public constructor(options: puppeteer.ConnectOptions & {CreateInstanceFunc?:(bw: puppeteer.Browser, session?: any) => Promise<puppeteer.Page>, session?: any}, puppeteer: any) {
         super(options, puppeteer);
     }
 

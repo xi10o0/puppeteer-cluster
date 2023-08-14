@@ -7,7 +7,8 @@ import { Page, ConnectOptions, Browser } from 'puppeteer';
  */
 export default abstract class ConcurrencyImplementation {
     protected options: ConnectOptions & {
-        CreateInstanceFunc?: (browser: Browser) => Promise<Page>;
+        CreateInstanceFunc?: (browser: Browser, session?: any) => Promise<Page>;
+        session?: any;
     };
     protected puppeteer: any;
     /**
@@ -15,7 +16,8 @@ export default abstract class ConcurrencyImplementation {
      * @param puppeteer  puppeteer object (like puppeteer or puppeteer-core)
      */
     constructor(options: ConnectOptions & {
-        CreateInstanceFunc?: (browser: Browser) => Promise<Page>;
+        CreateInstanceFunc?: (browser: Browser, session?: any) => Promise<Page>;
+        session?: any;
     }, puppeteer: any);
     /**
      * Initializes the manager

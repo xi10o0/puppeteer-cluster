@@ -12,6 +12,7 @@ import SystemMonitor from './SystemMonitor';
 import { EventEmitter } from 'events';
 import ConcurrencyImplementation, { WorkerInstance, ConcurrencyImplementationClassType }
     from './concurrency/ConcurrencyImplementation';
+import { session } from 'electron';
 
 const debug = util.debugGenerator('Cluster');
 
@@ -19,7 +20,7 @@ interface ClusterOptions {
     concurrency: number | ConcurrencyImplementationClassType;
     maxConcurrency: number;
     workerCreationDelay: number;
-    puppeteerOptions: ConnectOptions & {CreateInstanceFunc?:(browser: Browser) => Promise<Page>};
+    puppeteerOptions: ConnectOptions & {CreateInstanceFunc?:(browser: Browser, session?: any) => Promise<Page>, session: any};
     perBrowserOptions: ConnectOptions[] | undefined;
     monitor: boolean;
     timeout: number;
@@ -41,7 +42,8 @@ const DEFAULT_OPTIONS: ClusterOptions = {
     maxConcurrency: 1,
     workerCreationDelay: 0,
     puppeteerOptions: {
-        CreateInstanceFunc: undefined
+        CreateInstanceFunc: undefined,
+        session: null
         // headless: false, // just for testing...
     },
     perBrowserOptions: undefined,

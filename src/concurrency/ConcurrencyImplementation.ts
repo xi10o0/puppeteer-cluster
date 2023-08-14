@@ -10,14 +10,14 @@ import { Page, ConnectOptions, Browser } from 'puppeteer';
 
 export default abstract class ConcurrencyImplementation {
 
-    protected options: ConnectOptions & {CreateInstanceFunc?:(browser: Browser) => Promise<Page>};
+    protected options: ConnectOptions & {CreateInstanceFunc?:(browser: Browser, session?: any) => Promise<Page>, session?: any};
     protected puppeteer: any;
 
     /**
      * @param options  Options that should be provided to puppeteer.launch
      * @param puppeteer  puppeteer object (like puppeteer or puppeteer-core)
      */
-    public constructor(options: ConnectOptions & {CreateInstanceFunc?:(browser: Browser) => Promise<Page>}, puppeteer: any) {
+    public constructor(options: ConnectOptions & {CreateInstanceFunc?:(browser: Browser, session?: any) => Promise<Page>, session?: any}, puppeteer: any) {
         this.options = options;
         this.puppeteer = puppeteer;
     }

@@ -7,7 +7,8 @@ interface ClusterOptions {
     maxConcurrency: number;
     workerCreationDelay: number;
     puppeteerOptions: ConnectOptions & {
-        CreateInstanceFunc?: (browser: Browser) => Promise<Page>;
+        CreateInstanceFunc?: (browser: Browser, session?: any) => Promise<Page>;
+        session: any;
     };
     perBrowserOptions: ConnectOptions[] | undefined;
     monitor: boolean;

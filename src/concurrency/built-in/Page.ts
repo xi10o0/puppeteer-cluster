@@ -9,7 +9,7 @@ export default class Page extends SingleBrowserImplementation {
     protected async createResources(): Promise<ResourceData> {
         if (this.options.CreateInstanceFunc) {
             return {
-                page: await this.options.CreateInstanceFunc(this.browser as puppeteer.Browser)
+                page: await this.options.CreateInstanceFunc(this.browser as puppeteer.Browser, this.options.session)
             }
         }else {
             return {
