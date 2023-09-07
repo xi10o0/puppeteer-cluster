@@ -6,7 +6,7 @@ import ConcurrencyImplementation, { ResourceData } from './ConcurrencyImplementa
 import { debugGenerator, timeoutExecute } from '../util';
 const debug = debugGenerator('SingleBrowserImpl');
 
-const BROWSER_TIMEOUT = 5000;
+const BROWSER_TIMEOUT = 5000000;
 
 export default abstract class SingleBrowserImplementation extends ConcurrencyImplementation {
 
