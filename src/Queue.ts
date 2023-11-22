@@ -34,4 +34,8 @@ export default class Queue<T> {
         return this.list.shift();
     }
 
+    public clear(): void {
+        this.list.length = 0;
+    }
+
 }

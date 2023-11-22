@@ -7,5 +7,6 @@ export default class Queue<T> {
     size(): number;
     push(item: T, options?: QueueOptions): void;
     shift(): T | undefined;
+    clear(): void;
 }
 export {};

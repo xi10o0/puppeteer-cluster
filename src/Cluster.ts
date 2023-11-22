@@ -475,6 +475,10 @@ export default class Cluster<JobData = any, ReturnData = any> extends EventEmitt
         debug('Closed');
     }
 
+    public taskClear(): void {
+        this.jobQueue.clear();
+    }
+
     private monitor(): void {
         if (!this.display) {
             this.display = new Display();
